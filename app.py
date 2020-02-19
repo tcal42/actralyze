@@ -8,6 +8,8 @@ import seaborn as sns
 
 from sklearn import preprocessing
 
+# Import VADER sentiment analyzer.
+
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 analyzer = SentimentIntensityAnalyzer()
 
@@ -26,6 +28,7 @@ df2 = pd.read_csv('labeled_pool_comments.csv')
 category = pd.DataFrame(le.inverse_transform(df2["preds"].values))
 df2["category"] = category
 
+# Compute and plot polarity scores.
 
 positive_scores = []
 negative_scores = []
@@ -45,6 +48,7 @@ df4 = df2.groupby(['category']).mean()
 df4.drop(columns = ['preds'], inplace = True)
 st.bar_chart(df4)
 
+# Show distribution of categories
 
 st.subheader('Distribution of categories')
 
@@ -55,7 +59,8 @@ st.bar_chart(hist_data)
 
 st.subheader('Example comments:')
 
-# Adds a selectbox to the sidebar
+# Add a dropdown menu to view example text
+
 add_selectbox = st.selectbox(
     'Choose a category to view example text',
     tuple(categories)
@@ -73,9 +78,4 @@ else:
     st.write(example_quote)
     example_quote = example_quotes[np.random.randint(len(example_quotes))]
     st.write(example_quote)
-
-# print(categories_test)
-
-#if add_selectbox == 'Email':
-#    st.write('You selected Email.')
 
